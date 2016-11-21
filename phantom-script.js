@@ -1,11 +1,15 @@
 var system = require('system');
-var args = system.args;
+var page = require('webpage').create();
 
-// Example of how to get arguments passed from node script
-// args[0] would be this file's name: phantom-script.js
-var unusedArg = args[1];
+page.onError = function() {};
+page.viewportSize = {
+  width: 1024,
+  height: 768
+};
 
-// Send some info node's childProcess' stdout
-system.stdout.write('hello from phantom!')
-
-phantom.exit();
+page.open(system.args[1], function() {
+  setTimeout(function() {
+    system.stdout.write(page.renderBase64('PNG'));
+    phantom.exit();
+  }, 3000);
+});

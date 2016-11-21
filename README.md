@@ -1,11 +1,11 @@
-lambda-node-phantom
-===
+# AWS Lambda Twitter Screenshot Generator
 
-A simple working example of running PhantomJS on AWS Lambda via NodeJS
----
+Using AWS S3, Lambda and PhantomJS, generates screenshots of Twitter statuses
+and uploads them to an S3 bucket.
 
-This repository contains a complete, working example of running a simple PhantomJS script on AWS Lambda through a NodeJS child process.
+1. [Upload Twitter API output to an S3 bucket.](https://github.com/chriszarate/aws-firehose-twitter).
 
-First, clone this repository (or download the zip).  Next, [compress the contents of the folder](http://stackoverflow.com/a/34640743/2282538), and upload the zip file to an AWS Lambda function.
+2. Subscribe this Lambda function to that bucket's events. Don't forget to
+   provide the environment variables `TARGET_BUCKET` and `TARGET_PATH`.
 
-The PhantomJS binary is included in this repository, but if you would like to download it yourself you can get it from the [PhantomJS Bitbucket Page](https://bitbucket.org/ariya/phantomjs/downloads); download `phantomjs-1.9.8-linux-x86_64.tar.bz2`.
+Adapted from: [TylerPachal/lambda-node-phantom](https://github.com/TylerPachal/lambda-node-phantom)
