@@ -1,0 +1,10 @@
+{
+  "name": "twitter-screenshot-s3",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "aws-sdk": "2.x",
+    "dotenv": "^2.0.0",
+    "twit": "*"
+  }
+}
