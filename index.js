@@ -13,7 +13,7 @@ stream.on('tweet', function (tweetData) {
     return;
   }
 
-  var currentDate = new Date().toISOString().slice(0, 10);
+  var currentDate = new Date().toISOString().slice(0, 19);
   var tweetId = tweetData.id_str;
   var username = tweetData.user.screen_name;
   var url = 'https://twitter.com/' + username + '/status/' + tweetId;
