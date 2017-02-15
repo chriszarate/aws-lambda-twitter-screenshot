@@ -3,42 +3,20 @@ var childProcess = require('child_process');
 var config = require('./config');
 var path = require('path');
 
+var phantomjs = require('phantomjs-prebuilt');
+var binPath = phantomjs.path;
+
 var s3 = new AWS.S3();
 
-module.exports = function(tweetData) {
-  if (tweetData.user.screen_name !== 'realDonaldTrump') {
-    return;
-  }
-
+module.exports = function(url) {
   var currentDate = new Date().toISOString().slice(0, 19);
-  var tweetId = tweetData.id_str;
-  var username = tweetData.user.screen_name;
-  var url = 'https://twitter.com/' + username + '/status/' + tweetId;
-  var outputFilename = ['tweet', username, currentDate, tweetId].join('-');
-
-  var jsonS3Params = {
-    Bucket: config.s3.bucket,
-    Body: JSON.stringify(tweetData),
-    ContentType: 'application/json',
-    Key: 'tweets/' + username + '/' + outputFilename + '.json'
-  };
-
-  console.log(jsonS3Params.Body);
-
-  // Upload tweet JSON to S3.
-  s3.upload(jsonS3Params, function(err, data) {
-    if (err) {
-      console.error(err);
-      return;
-    }
-
-    console.log(data);
-  });
+  var outputFilename = ['tweet', currentDate].join('-');
 
   // Make screenshot and upload to S3.
   var screenshotData = '';
   var processArgs = [path.join(__dirname, 'screenshot-phantom.js'), url];
-  var screenshot = childProcess.spawn('/usr/bin/phantomjs', processArgs);
+   
+  var screenshot = childProcess.spawn(binPath, processArgs);
 
   screenshot.stderr.on('data', console.error);
 
@@ -52,7 +30,7 @@ module.exports = function(tweetData) {
       Body: new Buffer(screenshotData, 'base64'),
       ContentEncoding: 'base64',
       ContentType: 'image/png',
-      Key: 'screenshots/' + username + '/' + outputFilename + '.png'
+      Key: 'screenshots/' + outputFilename + '.png'
     };
 
     s3.upload(screenshotS3Params, function(err, data) {

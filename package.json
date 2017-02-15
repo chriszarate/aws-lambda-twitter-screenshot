@@ -5,6 +5,6 @@
   "dependencies": {
     "aws-sdk": "2.x",
     "dotenv": "^2.0.0",
-    "twit": "*"
+    "phantomjs-prebuilt": "^2.1.14"
   }
 }

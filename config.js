@@ -20,14 +20,5 @@ require('dotenv').config({path: __dirname + '/.env'});
 var config = module.exports = {
   s3: {
     bucket: process.env.S3_BUCKET_NAME
-  },
-  twitter: {
-    consumer_key: process.env.TWITTER_CONSUMER_KEY,
-    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-    access_token: process.env.TWITTER_ACCESS_TOKEN,
-    access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
-  },
-  filter: {
-    follow: process.env.TWITTER_STREAMING_API_FOLLOW
-  },
+  }
 };
